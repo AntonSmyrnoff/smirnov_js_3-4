@@ -1,48 +1,74 @@
 var test = {
-	header : function() {
-	  var head = document.createElement('h3');
-	  head.classList.add('test__header');
-	  head.innerHTML = 'Тест по программированию';
-	  document.body.appendChild(head);	
-	},
+  testHeader: 'Тест по программированию',
 
-	list : function() {
-	  var list = document.createElement('ol');
-	  document.body.appendChild(list);	
-	  
-	  var i = 0;
-      while (i < 3) {
-        var list_item = document.createElement('li');
-        list_item.classList.add('list_item');
-        list_item.innerHTML = 'Вопрос №'+(i+1);
-        list.appendChild(list_item);
+  questionList: [
+    {
+      question: 'Вопрос №1',
 
-        var j = 0;
-        while (j < 3) {
-          var answer = document.createElement('div');
-          answer.classList.add('radio');
-          list_item.appendChild(answer); 
-
-            var label = document.createElement('label');
-            label.innerHTML = '<input type="radio" name="optionsRadios'+(i+1)+'" id="optionsRadios'+(i+1)+'_'+(j+1)+'" value="option'+(j+1)+'"> Вариант ответа №'+(j+1);
-            answer.appendChild(label); 
-        j++;   
-        }
-      i++;
-      }	
+      answerVariants: [
+        'Вариант ответа №1',
+        'Вариант ответа №2',
+        'Вариант ответа №3'  
+      ]
     },
+        {
+      question: 'Вопрос №2',
 
-    submit : function() {
-      var submit = document.createElement('button');
-	  submit.classList.add('button');
-	  submit.setAttribute('type', 'submit');
-	  submit.innerHTML = 'Проверить мои результаты';
-	  document.body.appendChild(submit);	
+      answerVariants: [
+        'Вариант ответа №1',
+        'Вариант ответа №2',
+        'Вариант ответа №3'  
+      ]
     },
+        {
+      question: 'Вопрос №3',
 
-};
+      answerVariants: [
+        'Вариант ответа №1',
+        'Вариант ответа №2',
+        'Вариант ответа №3'  
+      ]
+    }
+  ],
 
-test.header();
-test.list();
-test.submit();
+  submit: 'Проверить мои результаты'
+}
 
+var h3 = document.createElement( 'h3' ); // create Test-header
+h3.classList.add( 'test__header' );
+h3.innerHTML = test.testHeader;
+document.body.appendChild( h3 );
+
+var ol = document.createElement( 'ol' ); // create List of questions
+ol.classList.add( 'question-list' )
+document.body.appendChild( ol );
+
+for (var i = 0; i < test.questionList.length; i++) { // add questions to the List of questions
+  li = document.createElement( 'li' );
+  li.classList.add( 'question-list__item' );
+  li.innerHTML = test.questionList[i].question;
+  ol.appendChild( li );
+
+  for (var j = 0; j < test.questionList[i].answerVariants.length; j++) { // add variants of answers
+    var div = document.createElement( 'div' );
+    div.classList.add( 'radio' );
+    li.appendChild( div );
+
+      var label = document.createElement( 'label' );
+      div.appendChild( label );
+      label.innerHTML = test.questionList[i].answerVariants[j];
+
+      var input = document.createElement( 'input' );
+      input.setAttribute( 'type', 'radio' );
+      input.setAttribute( 'value', (i+1).toString()+(j+1).toString() );
+      input.setAttribute( 'name', 'question_'+(i+1) );
+      input.style.float = 'left'; 
+      label.appendChild( input );
+     }  
+}
+
+var submit = document.createElement( 'input' ); // create button
+submit.classList.add( 'button' );
+submit.setAttribute( 'type', 'submit' );
+submit.setAttribute( 'value', test.submit ); 
+document.body.appendChild( submit );
